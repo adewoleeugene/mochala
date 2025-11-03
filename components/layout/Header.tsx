@@ -10,7 +10,6 @@ import Image from 'next/image'
 const navigation = [
   { name: 'How it Works', href: '#how-it-works' },
   { name: 'Features', href: '#features' },
-  { name: 'Why Mocha', href: '#why-mocha' },
   { name: 'Contact', href: '#contact' },
 ]
 

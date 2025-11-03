@@ -5,7 +5,6 @@ import { Footer } from '@/components/layout/Footer'
 import { HeroSection } from '@/components/sections/HeroSection'
 import { HowItWorksSection } from '@/components/sections/HowItWorksSection'
 import { KeyFeaturesSection } from '@/components/sections/KeyFeaturesSection'
-import { WhyMochaSection } from '@/components/sections/WhyMochaSection'
 import { ContactSection } from '@/components/sections/ContactSection'
 
 export default function Home() {
@@ -14,7 +13,6 @@ export default function Home() {
       <Header />
       <main>
         <HeroSection />
-        <WhyMochaSection />
         <HowItWorksSection />
         <KeyFeaturesSection />
         <ContactSection />
