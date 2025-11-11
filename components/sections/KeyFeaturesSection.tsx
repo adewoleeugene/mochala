@@ -1,7 +1,13 @@
 'use client'
 
+import { useRef, useEffect, useState, useCallback } from 'react'
 import { motion } from 'framer-motion'
-import { MessageCircle, ArrowLeftRight, Globe, CreditCard, Shield, Zap, Clock } from 'lucide-react'
+import { gsap } from 'gsap'
+import { MessageCircle, Zap, Repeat, Globe, Shield, Clock } from 'react-feather'
+
+const DEFAULT_PARTICLE_COUNT = 12
+const DEFAULT_SPOTLIGHT_RADIUS = 300
+const MOBILE_BREAKPOINT = 768
 
 // Helper function to convert hex to rgba
 const hexToRgba = (hex: string, alpha: number): string => {
@@ -11,365 +17,719 @@ const hexToRgba = (hex: string, alpha: number): string => {
   return `rgba(${r}, ${g}, ${b}, ${alpha})`
 }
 
-// Helper function to create gradient overlays
-const createGradientOverlay = (textColor: string, opacity: number = 0.15) => {
-  return `linear-gradient(135deg, ${hexToRgba(textColor, opacity)} 0%, transparent 100%)`
-}
-
-// Bento box card data with size specifications and enhanced visual properties
-const bentoCards = [
+// Feature cards data with subtle background fills
+const featureCards = [
   {
     id: 1,
     title: 'Send to WhatsApp',
     description: 'No registration needed. Send money to any WhatsApp number instantly.',
     icon: MessageCircle,
-    color: 'primary',
-    bgColor: '#593b2c', // Primary brown
-    textColor: '#faf5e9', // Light cream
-    benefits: [
-      'No account required',
-      'Works with any phone number',
-      'Instant notifications',
-      'Secure end-to-end encryption'
-    ],
     stats: '100% WhatsApp compatible',
-    size: 'large', // 2x2 grid span
-    gridColSpan: 'md:col-span-2',
-    gridRowSpan: 'md:row-span-2',
-    position: 'md:col-start-1 md:row-start-1',
-    iconGradient: 'linear-gradient(135deg, rgba(250, 245, 233, 0.25) 0%, rgba(250, 245, 233, 0.1) 100%)',
-    hasPattern: true
+    size: 'large',
+    bgColor: '#593b2c', // Brown for large cards
+    hoverBgColor: '#4a3024',
+    textColor: '#faf5e9', // Light cream text
   },
   {
     id: 2,
     title: 'Lightning Fast',
     description: 'Transactions are processed in seconds, not days.',
     icon: Zap,
-    color: 'secondary',
-    bgColor: '#cbc591', // Secondary beige
-    textColor: '#1c1917', // Dark text
     stats: 'Average 5-second transaction',
-    size: 'medium',
-    gridColSpan: '',
-    gridRowSpan: '',
-    position: 'md:col-start-3 md:row-start-1',
-    iconGradient: 'linear-gradient(135deg, rgba(28, 25, 23, 0.15) 0%, rgba(28, 25, 23, 0.05) 100%)',
-    hasPattern: false
+    size: 'small',
+    bgColor: '#cbc591', // Light olive for small cards
+    hoverBgColor: '#bfb885',
+    textColor: '#1c1917', // Dark text
   },
   {
     id: 3,
     title: 'Currency Swap',
     description: 'Convert USDC to Leones and vice versa.',
-    icon: ArrowLeftRight,
-    color: 'secondary',
-    bgColor: '#faf5e9', // Background color
-    textColor: '#1c1917',
+    icon: Repeat,
     stats: '1 USD = 23.5 SLE',
     size: 'small',
-    gridColSpan: '',
-    gridRowSpan: '',
-    position: 'md:col-start-4 md:row-start-1',
-    iconGradient: 'linear-gradient(135deg, rgba(28, 25, 23, 0.12) 0%, rgba(28, 25, 23, 0.04) 100%)',
-    hasPattern: false
+    bgColor: '#cbc591', // Light olive for small cards
+    hoverBgColor: '#bfb885',
+    textColor: '#1c1917', // Dark text
   },
   {
     id: 4,
-    title: 'Remittance & B2B',
-    description: 'Fast international payments for individuals and businesses.',
+    title: 'Investments in US Stocks',
+    description: 'Invest in US stocks and grow your wealth with global opportunities.',
     icon: Globe,
-    color: 'accent',
-    bgColor: '#daffde', // Accent green
-    textColor: '#0b262b', // Dark green text
-    stats: 'Global reach',
-    size: 'medium',
-    gridColSpan: '',
-    gridRowSpan: '',
-    position: 'md:col-start-4 md:row-start-2',
-    iconGradient: 'linear-gradient(135deg, rgba(11, 38, 43, 0.2) 0%, rgba(11, 38, 43, 0.08) 100%)',
-    hasPattern: false
+    stats: 'Global markets',
+    size: 'large',
+    bgColor: '#593b2c', // Brown for large cards
+    hoverBgColor: '#4a3024',
+    textColor: '#faf5e9', // Light cream text
   },
   {
     id: 5,
     title: 'Bank-Grade Security',
     description: 'Your funds are protected with blockchain technology.',
     icon: Shield,
-    color: 'primary',
-    bgColor: '#593b2c', // Dark brown (same as Send to WhatsApp)
-    textColor: '#faf5e9', // Light cream
     stats: 'Encrypted transactions',
     size: 'small',
-    gridColSpan: '',
-    gridRowSpan: '',
-    position: 'md:col-start-1 md:row-start-3',
-    iconGradient: 'linear-gradient(135deg, rgba(250, 245, 233, 0.25) 0%, rgba(250, 245, 233, 0.1) 100%)',
-    hasPattern: false
+    bgColor: '#cbc591', // Light olive for small cards
+    hoverBgColor: '#bfb885',
+    textColor: '#1c1917', // Dark text
   },
   {
     id: 6,
     title: '24/7 Available',
     description: 'Access your money anytime, anywhere.',
     icon: Clock,
-    color: 'accent',
-    bgColor: '#cbc591', // Secondary beige
-    textColor: '#1c1917',
     stats: 'Always on',
     size: 'small',
-    gridColSpan: '',
-    gridRowSpan: '',
-    position: 'md:col-start-2 md:row-start-3',
-    iconGradient: 'linear-gradient(135deg, rgba(28, 25, 23, 0.15) 0%, rgba(28, 25, 23, 0.05) 100%)',
-    hasPattern: false
+    bgColor: '#cbc591', // Light olive for small cards
+    hoverBgColor: '#bfb885',
+    textColor: '#1c1917', // Dark text
   },
-  {
-    id: 7,
-    title: 'Send Now, Pay Later',
-    description: 'Flexible payment options for your convenience.',
-    icon: CreditCard,
-    color: 'primary',
-    bgColor: '#faf5e9', // Light background
-    textColor: '#593b2c',
-    stats: 'Flexible payments',
-    size: 'medium',
-    gridColSpan: 'md:col-span-2',
-    gridRowSpan: '',
-    position: 'md:col-start-3 md:row-start-3',
-    iconGradient: 'linear-gradient(135deg, rgba(89, 59, 44, 0.15) 0%, rgba(89, 59, 44, 0.05) 100%)',
-    hasPattern: false
-  }
 ]
 
-export function KeyFeaturesSection() {
+const createParticleElement = (x: number, y: number, color: string) => {
+  const el = document.createElement('div')
+  el.className = 'particle'
+  el.style.cssText = `
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: ${color};
+    box-shadow: 0 0 6px ${color};
+    pointer-events: none;
+    z-index: 100;
+    left: ${x}px;
+    top: ${y}px;
+  `
+  return el
+}
+
+const calculateSpotlightValues = (radius: number) => ({
+  proximity: radius * 0.5,
+  fadeDistance: radius * 0.75
+})
+
+const updateCardGlowProperties = (
+  card: HTMLElement,
+  mouseX: number,
+  mouseY: number,
+  glow: number,
+  radius: number
+) => {
+  const rect = card.getBoundingClientRect()
+  const relativeX = ((mouseX - rect.left) / rect.width) * 100
+  const relativeY = ((mouseY - rect.top) / rect.height) * 100
+
+  card.style.setProperty('--glow-x', `${relativeX}%`)
+  card.style.setProperty('--glow-y', `${relativeY}%`)
+  card.style.setProperty('--glow-intensity', glow.toString())
+  card.style.setProperty('--glow-radius', `${radius}px`)
+}
+
+interface ParticleCardProps {
+  children: React.ReactNode
+  className?: string
+  disableAnimations?: boolean
+  style?: React.CSSProperties
+  particleCount?: number
+  glowColor: string
+  enableTilt?: boolean
+  clickEffect?: boolean
+  enableMagnetism?: boolean
+}
+
+const ParticleCard: React.FC<ParticleCardProps> = ({
+  children,
+  className = '',
+  disableAnimations = false,
+  style,
+  particleCount = DEFAULT_PARTICLE_COUNT,
+  glowColor,
+  enableTilt = true,
+  clickEffect = false,
+  enableMagnetism = false
+}) => {
+  const cardRef = useRef<HTMLDivElement>(null)
+  const particlesRef = useRef<HTMLDivElement[]>([])
+  const timeoutsRef = useRef<NodeJS.Timeout[]>([])
+  const isHoveredRef = useRef(false)
+  const memoizedParticles = useRef<HTMLDivElement[]>([])
+  const particlesInitialized = useRef(false)
+  const magnetismAnimationRef = useRef<gsap.core.Tween | null>(null)
+
+  const initializeParticles = useCallback(() => {
+    if (particlesInitialized.current || !cardRef.current) return
+
+    const { width, height } = cardRef.current.getBoundingClientRect()
+    memoizedParticles.current = Array.from({ length: particleCount }, () =>
+      createParticleElement(Math.random() * width, Math.random() * height, glowColor)
+    )
+    particlesInitialized.current = true
+  }, [particleCount, glowColor])
+
+  const clearAllParticles = useCallback(() => {
+    timeoutsRef.current.forEach(clearTimeout)
+    timeoutsRef.current = []
+    magnetismAnimationRef.current?.kill()
+
+    particlesRef.current.forEach(particle => {
+      gsap.to(particle, {
+        scale: 0,
+        opacity: 0,
+        duration: 0.3,
+        ease: 'back.in(1.7)',
+        onComplete: () => {
+          particle.parentNode?.removeChild(particle)
+        }
+      })
+    })
+    particlesRef.current = []
+  }, [])
+
+  const animateParticles = useCallback(() => {
+    if (!cardRef.current || !isHoveredRef.current) return
+
+    if (!particlesInitialized.current) {
+      initializeParticles()
+    }
+
+    memoizedParticles.current.forEach((particle, index) => {
+      const timeoutId = setTimeout(() => {
+        if (!isHoveredRef.current || !cardRef.current) return
+
+        const clone = particle.cloneNode(true) as HTMLDivElement
+        cardRef.current.appendChild(clone)
+        particlesRef.current.push(clone)
+
+        gsap.fromTo(clone, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.3, ease: 'back.out(1.7)' })
+
+        gsap.to(clone, {
+          x: (Math.random() - 0.5) * 100,
+          y: (Math.random() - 0.5) * 100,
+          rotation: Math.random() * 360,
+          duration: 2 + Math.random() * 2,
+          ease: 'none',
+          repeat: -1,
+          yoyo: true
+        })
+
+        gsap.to(clone, {
+          opacity: 0.3,
+          duration: 1.5,
+          ease: 'power2.inOut',
+          repeat: -1,
+          yoyo: true
+        })
+      }, index * 100)
+
+      timeoutsRef.current.push(timeoutId)
+    })
+  }, [initializeParticles])
+
+  useEffect(() => {
+    if (disableAnimations || !cardRef.current) return
+
+    const element = cardRef.current
+
+    const handleMouseEnter = () => {
+      isHoveredRef.current = true
+      animateParticles()
+
+      if (enableTilt) {
+        gsap.to(element, {
+          rotateX: 5,
+          rotateY: 5,
+          duration: 0.3,
+          ease: 'power2.out',
+          transformPerspective: 1000
+        })
+      }
+    }
+
+    const handleMouseLeave = () => {
+      isHoveredRef.current = false
+      clearAllParticles()
+
+      if (enableTilt) {
+        gsap.to(element, {
+          rotateX: 0,
+          rotateY: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      }
+
+      if (enableMagnetism) {
+        gsap.to(element, {
+          x: 0,
+          y: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      }
+    }
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!enableTilt && !enableMagnetism) return
+
+      const rect = element.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+      const centerX = rect.width / 2
+      const centerY = rect.height / 2
+
+      if (enableTilt) {
+        const rotateX = ((y - centerY) / centerY) * -10
+        const rotateY = ((x - centerX) / centerX) * 10
+
+        gsap.to(element, {
+          rotateX,
+          rotateY,
+          duration: 0.1,
+          ease: 'power2.out',
+          transformPerspective: 1000
+        })
+      }
+
+      if (enableMagnetism) {
+        const magnetX = (x - centerX) * 0.05
+        const magnetY = (y - centerY) * 0.05
+
+        magnetismAnimationRef.current = gsap.to(element, {
+          x: magnetX,
+          y: magnetY,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      }
+    }
+
+    const handleClick = (e: MouseEvent) => {
+      if (!clickEffect) return
+
+      const rect = element.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+
+      const maxDistance = Math.max(
+        Math.hypot(x, y),
+        Math.hypot(x - rect.width, y),
+        Math.hypot(x, y - rect.height),
+        Math.hypot(x - rect.width, y - rect.height)
+      )
+
+      const ripple = document.createElement('div')
+      ripple.style.cssText = `
+        position: absolute;
+        width: ${maxDistance * 2}px;
+        height: ${maxDistance * 2}px;
+        border-radius: 50%;
+        background: radial-gradient(circle, ${hexToRgba(glowColor, 0.4)} 0%, ${hexToRgba(glowColor, 0.2)} 30%, transparent 70%);
+        left: ${x - maxDistance}px;
+        top: ${y - maxDistance}px;
+        pointer-events: none;
+        z-index: 1000;
+      `
+
+      element.appendChild(ripple)
+
+      gsap.fromTo(
+        ripple,
+        {
+          scale: 0,
+          opacity: 1
+        },
+        {
+          scale: 1,
+          opacity: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          onComplete: () => ripple.remove()
+        }
+      )
+    }
+
+    element.addEventListener('mouseenter', handleMouseEnter)
+    element.addEventListener('mouseleave', handleMouseLeave)
+    element.addEventListener('mousemove', handleMouseMove)
+    element.addEventListener('click', handleClick)
+
+    return () => {
+      isHoveredRef.current = false
+      element.removeEventListener('mouseenter', handleMouseEnter)
+      element.removeEventListener('mouseleave', handleMouseLeave)
+      element.removeEventListener('mousemove', handleMouseMove)
+      element.removeEventListener('click', handleClick)
+      clearAllParticles()
+    }
+  }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor])
+
   return (
-    <section id="features" className="py-20 md:py-24 relative overflow-hidden">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div
+      ref={cardRef}
+      className={`${className} relative overflow-hidden`}
+      style={{ ...style, position: 'relative', overflow: 'hidden' }}
+    >
+      {children}
+    </div>
+  )
+}
+
+interface GlobalSpotlightProps {
+  gridRef: React.RefObject<HTMLDivElement>
+  disableAnimations?: boolean
+  enabled?: boolean
+  spotlightRadius?: number
+  glowColor: string
+}
+
+const GlobalSpotlight: React.FC<GlobalSpotlightProps> = ({
+  gridRef,
+  disableAnimations = false,
+  enabled = true,
+  spotlightRadius = DEFAULT_SPOTLIGHT_RADIUS,
+  glowColor
+}) => {
+  const spotlightRef = useRef<HTMLDivElement | null>(null)
+  const isInsideSection = useRef(false)
+
+  useEffect(() => {
+    if (disableAnimations || !gridRef?.current || !enabled) return
+
+    const spotlight = document.createElement('div')
+    spotlight.className = 'global-spotlight'
+    spotlight.style.cssText = `
+      position: fixed;
+      width: 800px;
+      height: 800px;
+      border-radius: 50%;
+      pointer-events: none;
+      background: radial-gradient(circle,
+        ${hexToRgba(glowColor, 0.15)} 0%,
+        ${hexToRgba(glowColor, 0.08)} 15%,
+        ${hexToRgba(glowColor, 0.04)} 25%,
+        ${hexToRgba(glowColor, 0.02)} 40%,
+        ${hexToRgba(glowColor, 0.01)} 65%,
+        transparent 70%
+      );
+      z-index: 200;
+      opacity: 0;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+    `
+    document.body.appendChild(spotlight)
+    spotlightRef.current = spotlight
+
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!spotlightRef.current || !gridRef.current) return
+
+      const section = gridRef.current.closest('.bento-section')
+      const rect = section?.getBoundingClientRect()
+      const mouseInside =
+        rect && e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom
+
+      isInsideSection.current = mouseInside || false
+      const cards = gridRef.current.querySelectorAll('.card')
+
+      if (!mouseInside) {
+        gsap.to(spotlightRef.current, {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+        cards.forEach(card => {
+          ;(card as HTMLElement).style.setProperty('--glow-intensity', '0')
+        })
+        return
+      }
+
+      const { proximity, fadeDistance } = calculateSpotlightValues(spotlightRadius)
+      let minDistance = Infinity
+
+      cards.forEach(card => {
+        const cardElement = card as HTMLElement
+        const cardRect = cardElement.getBoundingClientRect()
+        const centerX = cardRect.left + cardRect.width / 2
+        const centerY = cardRect.top + cardRect.height / 2
+        const distance =
+          Math.hypot(e.clientX - centerX, e.clientY - centerY) - Math.max(cardRect.width, cardRect.height) / 2
+        const effectiveDistance = Math.max(0, distance)
+
+        minDistance = Math.min(minDistance, effectiveDistance)
+
+        let glowIntensity = 0
+        if (effectiveDistance <= proximity) {
+          glowIntensity = 1
+        } else if (effectiveDistance <= fadeDistance) {
+          glowIntensity = (fadeDistance - effectiveDistance) / (fadeDistance - proximity)
+        }
+
+        updateCardGlowProperties(cardElement, e.clientX, e.clientY, glowIntensity, spotlightRadius)
+      })
+
+      gsap.to(spotlightRef.current, {
+        left: e.clientX,
+        top: e.clientY,
+        duration: 0.1,
+        ease: 'power2.out'
+      })
+
+      const targetOpacity =
+        minDistance <= proximity
+          ? 0.8
+          : minDistance <= fadeDistance
+            ? ((fadeDistance - minDistance) / (fadeDistance - proximity)) * 0.8
+            : 0
+
+      gsap.to(spotlightRef.current, {
+        opacity: targetOpacity,
+        duration: targetOpacity > 0 ? 0.2 : 0.5,
+        ease: 'power2.out'
+      })
+    }
+
+    const handleMouseLeave = () => {
+      isInsideSection.current = false
+      gridRef.current?.querySelectorAll('.card').forEach(card => {
+        ;(card as HTMLElement).style.setProperty('--glow-intensity', '0')
+      })
+      if (spotlightRef.current) {
+        gsap.to(spotlightRef.current, {
+          opacity: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      }
+    }
+
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseleave', handleMouseLeave)
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseleave', handleMouseLeave)
+      spotlightRef.current?.parentNode?.removeChild(spotlightRef.current)
+    }
+  }, [gridRef, disableAnimations, enabled, spotlightRadius, glowColor])
+
+  return null
+}
+
+const useMobileDetection = () => {
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= MOBILE_BREAKPOINT)
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  return isMobile
+}
+
+export function KeyFeaturesSection() {
+  const gridRef = useRef<HTMLDivElement>(null)
+  const isMobile = useMobileDetection()
+  const shouldDisableAnimations = isMobile
+
+  const glowColor = '#daffde' // Accent green from your design system
+
+  return (
+    <section id="features" className="py-12 sm:py-16 md:py-20 lg:py-24 xl:py-28 2xl:py-32 relative overflow-hidden bento-section">
+      <style jsx global>{`
+        .bento-section {
+          --glow-x: 50%;
+          --glow-y: 50%;
+          --glow-intensity: 0;
+          --glow-radius: 200px;
+        }
+
+        .card--border-glow {
+          transition: background-color 0.3s ease;
+        }
+
+        .card--border-glow:hover {
+          background-color: var(--hover-bg) !important;
+        }
+
+        .card--border-glow::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          padding: 6px;
+          background: radial-gradient(var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+              ${hexToRgba(glowColor, 0.8)} 0%,
+              ${hexToRgba(glowColor, 0.4)} 30%,
+              transparent 60%);
+          border-radius: inherit;
+          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          mask-composite: subtract;
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          pointer-events: none;
+          transition: opacity 0.3s ease;
+          z-index: 1;
+        }
+
+        .card--border-glow:hover::after {
+          opacity: 1;
+        }
+
+        .card--border-glow:hover {
+          box-shadow: 0 4px 20px rgba(218, 255, 222, 0.4), 0 0 30px ${hexToRgba(glowColor, 0.2)};
+        }
+      `}</style>
+
+      <GlobalSpotlight
+        gridRef={gridRef}
+        disableAnimations={shouldDisableAnimations}
+        enabled={true}
+        spotlightRadius={DEFAULT_SPOTLIGHT_RADIUS}
+        glowColor={glowColor}
+      />
+
+      <div className="mx-auto max-w-full sm:max-w-2xl md:max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 2xl:px-16">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16 md:mb-20"
+          className="text-center mb-10 sm:mb-12 md:mb-14 lg:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mb-4 tracking-tight">
-            Key Features
+          <h2 className="text-sm sm:text-base md:text-lg font-semibold mb-3 sm:mb-4 tracking-wide" style={{ color: '#593b2c' }}>
+            KEY FEATURES
           </h2>
-          <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Everything you need to send money to Sierra Leone with confidence and ease.
+          <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight max-w-4xl mx-auto">
+            Everything you need to <br />
+            <span style={{ color: '#593b2c' }}>send money to Sierra Leone</span>
           </p>
         </motion.div>
 
-        {/* Bento Box Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 md:grid-rows-3 gap-4 sm:gap-5 md:gap-6 mb-16 auto-rows-fr">
-          {bentoCards.map((card, index) => (
-            <motion.div
-              key={card.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ 
-                duration: 0.5, 
-                delay: index * 0.08,
-                ease: [0.16, 1, 0.3, 1]
-              }}
-              whileHover={{ 
-                y: -8,
-                transition: { duration: 0.3, ease: 'easeOut' }
-              }}
-              className={`group relative h-full rounded-3xl overflow-hidden ${card.gridColSpan} ${card.gridRowSpan} ${card.position}`}
-              style={{
-                backgroundColor: card.bgColor,
-                color: card.textColor,
-                boxShadow: `0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)`,
-              }}
-            >
-              {/* Subtle border glow on hover */}
-              <div 
-                className="absolute inset-0 rounded-3xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{
-                  boxShadow: `inset 0 0 0 1px ${hexToRgba(card.textColor, 0.2)}`,
+        {/* Bento Grid - Asymmetric layout matching screenshot */}
+        <div
+          ref={gridRef}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 lg:auto-rows-[260px] gap-2 sm:gap-2 md:gap-2 lg:gap-2 xl:gap-3 2xl:gap-3 mb-10 sm:mb-12 md:mb-14 lg:mb-16 2xl:mb-20"
+        >
+          {featureCards.map((card, index) => {
+            const Icon = card.icon
+            const isLarge = card.size === 'large'
+
+            // Define specific grid positioning for bento layout
+            let gridClass = ''
+            if (index === 0) {
+              // Send to WhatsApp - Large card spanning 2 rows on right (rows 1-2, cols 3-4)
+              gridClass = 'lg:col-start-3 lg:col-span-2 lg:row-start-1 lg:row-span-2'
+            } else if (index === 1) {
+              // Lightning Fast - Small card (row 1, col 1)
+              gridClass = 'lg:col-start-1 lg:row-start-1'
+            } else if (index === 2) {
+              // Currency Swap - Small card (row 1, col 2)
+              gridClass = 'lg:col-start-2 lg:row-start-1'
+            } else if (index === 3) {
+              // Remittance - Large card spanning 2 rows on left (rows 2-3, cols 1-2)
+              gridClass = 'lg:col-start-1 lg:col-span-2 lg:row-start-2 lg:row-span-2'
+            } else if (index === 4) {
+              // Security - Small card (row 3, col 3)
+              gridClass = 'lg:col-start-3 lg:row-start-3'
+            } else if (index === 5) {
+              // 24/7 - Small card (row 3, col 4)
+              gridClass = 'lg:col-start-4 lg:row-start-3'
+            }
+
+            return (
+              <motion.div
+                key={card.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-50px' }}
+                transition={{
+                  duration: 0.5,
+                  delay: index * 0.08,
+                  ease: [0.16, 1, 0.3, 1]
                 }}
-              />
-              
-              {/* Subtle background pattern for large card */}
-              {card.hasPattern && (
-                <div 
-                  className="absolute inset-0 opacity-[0.03]"
+                className={gridClass}
+              >
+                <ParticleCard
+                  className={`card card--border-glow h-full flex flex-col justify-between relative w-full ${isLarge ? 'p-5 lg:p-6' : 'p-4 lg:p-5'} rounded-3xl overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-2 group`}
                   style={{
-                    backgroundImage: `radial-gradient(circle at 2px 2px, ${card.textColor} 1px, transparent 0)`,
-                    backgroundSize: '24px 24px',
+                    backgroundColor: card.bgColor,
+                    color: card.textColor,
+                    border: 'none',
+                    minHeight: '120px',
+                    ['--hover-bg' as string]: card.hoverBgColor,
                   }}
-                />
-              )}
-
-              {/* Gradient overlay on hover */}
-              <div 
-                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                style={{
-                  background: createGradientOverlay(card.textColor, 0.15),
-                }}
-              />
-
-              {/* Enhanced shadow on hover */}
-              <div 
-                className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10"
-                style={{
-                  boxShadow: `0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.1)`,
-                  filter: 'blur(8px)',
-                  transform: 'translateY(8px)',
-                }}
-              />
-
-              <div className={`relative h-full flex flex-col z-10 ${
-                card.size === 'large' ? 'p-8 md:p-10 lg:p-12' : 
-                card.size === 'medium' ? 'p-6 md:p-7 lg:p-8' : 
-                'p-5 md:p-6'
-              }`}>
-                {/* Enhanced Icon with gradient */}
-                <motion.div
-                  whileHover={{ scale: 1.15, rotate: [0, -5, 5, -5, 0] }}
-                  transition={{ 
-                    type: 'spring', 
-                    stiffness: 300, 
-                    damping: 20,
-                    duration: 0.5 
-                  }}
-                  className={card.size === 'large' ? 'mb-6 md:mb-8' : card.size === 'medium' ? 'mb-4 md:mb-5' : 'mb-3 md:mb-4'}
+                  disableAnimations={shouldDisableAnimations}
+                  particleCount={8}
+                  glowColor='rgba(89, 59, 44, 0.3)'
+                  enableTilt={false}
+                  clickEffect={false}
+                  enableMagnetism={false}
                 >
-                  <motion.div 
-                    className={`rounded-2xl flex items-center justify-center backdrop-blur-sm transition-all duration-300 ${
-                      card.size === 'large' ? 'w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24' : 
-                      card.size === 'medium' ? 'w-14 h-14 md:w-16 md:h-16' : 
-                      'w-12 h-12 md:w-14 md:h-14'
-                    } group-hover:scale-110`}
-                    style={{ 
-                      background: card.iconGradient,
-                      boxShadow: `0 4px 12px ${card.textColor}15, inset 0 1px 0 ${card.textColor}20`,
-                    }}
-                    whileHover={{
-                      boxShadow: `0 8px 16px ${card.textColor}25, inset 0 1px 0 ${card.textColor}30`,
-                    }}
-                  >
-                    <card.icon 
-                      className={`transition-all duration-300 ${
-                        card.size === 'large' ? 'w-8 h-8 md:w-10 md:h-10 lg:w-12 lg:h-12' : 
-                        card.size === 'medium' ? 'w-7 h-7 md:w-8 md:h-8' : 
-                        'w-6 h-6 md:w-7 md:h-7'
-                      }`}
-                      style={{ color: card.textColor }}
-                    />
-                  </motion.div>
-                </motion.div>
-
-                {/* Enhanced Content */}
-                <div className="flex-1 flex flex-col space-y-3 md:space-y-4">
-                  <div>
-                    <motion.h3 
-                      className={`font-bold mb-2 md:mb-3 leading-tight tracking-tight ${
-                        card.size === 'large' ? 'text-2xl md:text-3xl lg:text-4xl' : 
-                        card.size === 'medium' ? 'text-xl md:text-2xl lg:text-3xl' : 
-                        'text-lg md:text-xl lg:text-2xl'
-                      }`} 
-                      style={{ color: card.textColor }}
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4, delay: index * 0.08 + 0.1 }}
-                    >
-                      {card.title}
-                    </motion.h3>
-                    {card.description && (
-                      <motion.p 
-                        className={`leading-relaxed ${
-                          card.size === 'large' ? 'text-base md:text-lg lg:text-xl' : 
-                          card.size === 'small' ? 'text-sm md:text-base' : 
-                          'text-base md:text-lg'
-                        }`} 
-                        style={{ 
-                          color: card.textColor,
-                          opacity: 0.85 
-                        }}
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 0.85 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.4, delay: index * 0.08 + 0.15 }}
+                  {/* Content */}
+                  <div className="flex-1 flex flex-col">
+                    <div>
+                      {/* Icon and Title Inline */}
+                      <div className="flex items-center gap-2 lg:gap-3 mb-1 lg:mb-2">
+                        <motion.div
+                          whileHover={{ scale: 1.1 }}
+                          transition={{
+                            type: 'spring',
+                            stiffness: 300,
+                            damping: 20
+                          }}
+                        >
+                          <Icon
+                            size={isLarge ? 24 : 20}
+                            color={card.textColor}
+                            className="transition-all duration-300 flex-shrink-0"
+                            strokeWidth={2}
+                          />
+                        </motion.div>
+                        <h3
+                          className={`font-bold leading-tight tracking-tight ${
+                            isLarge ? 'text-xl lg:text-2xl' : 'text-base lg:text-lg'
+                          }`}
+                          style={{ color: card.textColor }}
+                        >
+                          {card.title}
+                        </h3>
+                      </div>
+                      <p
+                        className={`leading-snug ${
+                          isLarge ? 'text-sm lg:text-base' : 'text-xs lg:text-sm'
+                        }`}
+                        style={{ color: card.textColor, opacity: 0.8 }}
                       >
                         {card.description}
-                      </motion.p>
+                      </p>
+                    </div>
+
+                    {/* Stats */}
+                    {card.stats && (
+                      <div
+                        className={`${isLarge ? 'pt-3 lg:pt-4' : 'pt-2 lg:pt-3'} border-t mt-auto`}
+                        style={{ borderColor: `${card.textColor}20` }}
+                      >
+                        <div
+                          className={`font-semibold tracking-wide ${
+                            isLarge ? 'text-xs lg:text-sm' : 'text-xs'
+                          }`}
+                          style={{ color: card.textColor, opacity: 0.7 }}
+                        >
+                          {card.stats}
+                        </div>
+                      </div>
                     )}
                   </div>
-
-                  {/* Enhanced Benefits List */}
-                  {card.benefits && (
-                    <ul className="space-y-2.5 md:space-y-3 flex-1 pt-2">
-                      {card.benefits.map((benefit, benefitIndex) => (
-                        <motion.li
-                          key={benefitIndex}
-                          initial={{ opacity: 0, x: -10 }}
-                          whileInView={{ opacity: 1, x: 0 }}
-                          viewport={{ once: true }}
-                          transition={{ 
-                            duration: 0.3, 
-                            delay: index * 0.08 + 0.2 + benefitIndex * 0.05,
-                            ease: 'easeOut'
-                          }}
-                          className="flex items-start space-x-2.5 md:space-x-3 group/benefit"
-                        >
-                          <motion.div 
-                            className="w-1.5 h-1.5 rounded-full flex-shrink-0 mt-2 transition-all duration-300 group-hover/benefit:scale-125" 
-                            style={{ 
-                              backgroundColor: card.textColor,
-                              boxShadow: `0 0 8px ${card.textColor}40`
-                            }} 
-                          />
-                          <span 
-                            className="leading-relaxed text-sm md:text-base lg:text-lg" 
-                            style={{ 
-                              color: card.textColor,
-                              opacity: 0.9 
-                            }}
-                          >
-                            {benefit}
-                          </span>
-                        </motion.li>
-                      ))}
-                    </ul>
-                  )}
-
-                  {/* Enhanced Stats */}
-                  {card.stats && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true }}
-                      transition={{ 
-                        duration: 0.5, 
-                        delay: index * 0.08 + 0.4,
-                        ease: 'easeOut'
-                      }}
-                      className={`${card.size === 'large' ? 'pt-6 md:pt-8' : 'pt-4 md:pt-5'} border-t mt-auto`}
-                      style={{ 
-                        borderColor: `${card.textColor}25`,
-                        borderWidth: '1px'
-                      }}
-                    >
-                      <div 
-                        className={`font-semibold tracking-wide ${
-                          card.size === 'large' ? 'text-base md:text-lg lg:text-xl' : 
-                          'text-sm md:text-base'
-                        }`} 
-                        style={{ 
-                          color: card.textColor,
-                          opacity: 0.95 
-                        }}
-                      >
-                        {card.stats}
-                      </div>
-                    </motion.div>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+                </ParticleCard>
+              </motion.div>
+            )
+          })}
         </div>
 
         {/* CTA Section */}
@@ -378,32 +738,27 @@ export function KeyFeaturesSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-16"
+          className="text-center mt-10 sm:mt-12 md:mt-14 lg:mt-16 2xl:mt-20"
         >
-          <div className="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 text-primary-foreground">
-            <h3 className="text-2xl font-bold mb-4">
-              Ready to experience the future of money transfers?
+          <div className="bg-secondary rounded-xl sm:rounded-2xl md:rounded-3xl p-6 sm:p-7 md:p-8 lg:p-10 xl:p-12 2xl:p-14 text-secondary-foreground">
+            <h3 className="text-xl sm:text-2xl md:text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold mb-3 sm:mb-4 md:mb-5 lg:mb-6 2xl:mb-8">
+              Ready to experience the future <br />
+              of money transfers?
             </h3>
-            <p className="text-primary-foreground/80 mb-6 max-w-2xl mx-auto">
-              Join thousands of users who trust Mocha for their international money transfers. 
+            <p className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl text-secondary-foreground/80 mb-5 sm:mb-6 md:mb-7 lg:mb-8 2xl:mb-10 max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl 2xl:max-w-4xl mx-auto leading-relaxed">
+              Join thousands of users who trust Mocha for their international money transfers.
               Fast, secure, and built for Sierra Leone.
             </p>
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center"
+              className="flex justify-center"
             >
               <a
                 href="#contact"
-                className="inline-flex items-center px-6 py-3 bg-primary-foreground text-primary rounded-lg font-medium hover:bg-primary-foreground/90 transition-colors duration-200"
+                className="inline-flex items-center justify-center px-5 sm:px-6 md:px-7 lg:px-8 xl:px-9 2xl:px-10 py-2.5 sm:py-3 md:py-3.5 lg:py-4 2xl:py-5 bg-primary text-primary-foreground rounded-lg md:rounded-xl text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl 2xl:text-2xl font-medium hover:bg-primary/90 transition-colors duration-200"
               >
                 Get Started Today
-              </a>
-              <a
-                href="#how-it-works"
-                className="inline-flex items-center px-6 py-3 border border-primary-foreground/20 text-primary-foreground rounded-lg font-medium hover:bg-primary-foreground/10 transition-colors duration-200"
-              >
-                Learn More
               </a>
             </motion.div>
           </div>

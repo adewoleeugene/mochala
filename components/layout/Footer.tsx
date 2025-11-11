@@ -38,7 +38,7 @@ export function Footer() {
   )
 
   return (
-    <footer className="bg-primary text-primary-foreground">
+    <footer style={{ backgroundColor: '#593b2c', color: '#faf5e9' }}>
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
@@ -50,8 +50,8 @@ export function Footer() {
               transition={{ duration: 0.5 }}
               className="space-y-4"
             >
-              <div className="text-2xl font-bold">Mocha</div>
-              <p className="text-sm text-primary-foreground/80">
+              <div className="text-2xl font-bold" style={{ color: '#faf5e9' }}>Mocha</div>
+              <p className="text-sm" style={{ color: '#faf5e9', opacity: 0.8 }}>
                 Send, spend, and earn with stablecoins — right on WhatsApp.
               </p>
               <div className="flex space-x-4">
@@ -63,9 +63,10 @@ export function Footer() {
                     rel={social.name === 'WhatsApp' ? 'noopener noreferrer' : undefined}
                     whileHover={{ scale: 1.1, y: -2 }}
                     whileTap={{ scale: 0.95 }}
-                    className={`p-2 rounded-full bg-primary-foreground/10 hover:bg-primary-foreground/20 transition-colors duration-200 ${social.color}`}
+                    className="p-2 rounded-full transition-colors duration-200"
+                    style={{ backgroundColor: 'rgba(250, 245, 233, 0.1)' }}
                   >
-                    <social.icon className="w-5 h-5" />
+                    <social.icon className="w-5 h-5" style={{ color: '#faf5e9' }} />
                   </motion.a>
                 ))}
               </div>
@@ -80,14 +81,15 @@ export function Footer() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="space-y-4"
           >
-            <h3 className="text-lg font-semibold">Company</h3>
+            <h3 className="text-lg font-semibold" style={{ color: '#faf5e9' }}>Company</h3>
             <ul className="space-y-2">
               {footerLinks.company.map((link) => (
                 <li key={link.name}>
                   <motion.a
                     href={link.href}
                     whileHover={{ x: 5 }}
-                    className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200"
+                    className="text-sm transition-colors duration-200"
+                    style={{ color: 'rgba(250, 245, 233, 0.8)' }}
                   >
                     {link.name}
                   </motion.a>
@@ -104,14 +106,15 @@ export function Footer() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="space-y-4"
           >
-            <h3 className="text-lg font-semibold">Legal</h3>
+            <h3 className="text-lg font-semibold" style={{ color: '#faf5e9' }}>Legal</h3>
             <ul className="space-y-2">
               {footerLinks.legal.map((link) => (
                 <li key={link.name}>
                   <motion.a
                     href={link.href}
                     whileHover={{ x: 5 }}
-                    className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200"
+                    className="text-sm transition-colors duration-200"
+                    style={{ color: 'rgba(250, 245, 233, 0.8)' }}
                   >
                     {link.name}
                   </motion.a>
@@ -128,14 +131,15 @@ export function Footer() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="space-y-4"
           >
-            <h3 className="text-lg font-semibold">Support</h3>
+            <h3 className="text-lg font-semibold" style={{ color: '#faf5e9' }}>Support</h3>
             <ul className="space-y-2">
               {footerLinks.support.map((link) => (
                 <li key={link.name}>
                   <motion.a
                     href={link.href}
                     whileHover={{ x: 5 }}
-                    className="text-sm text-primary-foreground/80 hover:text-primary-foreground transition-colors duration-200"
+                    className="text-sm transition-colors duration-200"
+                    style={{ color: 'rgba(250, 245, 233, 0.8)' }}
                   >
                     {link.name}
                   </motion.a>
@@ -151,14 +155,15 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-8 pt-8 border-t border-primary-foreground/20"
+          className="mt-8 pt-8"
+          style={{ borderTop: '1px solid rgba(250, 245, 233, 0.2)' }}
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm text-primary-foreground/80">
+            <p className="text-sm" style={{ color: 'rgba(250, 245, 233, 0.8)' }}>
               © 2025 Mocha. All rights reserved.
             </p>
             <div className="flex space-x-6">
-              <span className="text-sm text-primary-foreground/80">
+              <span className="text-sm" style={{ color: 'rgba(250, 245, 233, 0.8)' }}>
                 Made with ❤️ for Sierra Leone
               </span>
             </div>
