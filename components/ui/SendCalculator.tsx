@@ -241,18 +241,31 @@ export function SendCalculator() {
               </div>
             </motion.div>
 
-            {/* Next Button */}
+            {/* Service Unavailable Message */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.65 }}
+              className="mb-3 sm:mb-4 md:mb-4 lg:mb-4 2xl:mb-5 text-center"
+            >
+              <p className="text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base 2xl:text-base font-semibold px-3 sm:px-4 md:px-4 lg:px-5 xl:px-6 2xl:px-6 py-2 sm:py-2.5 md:py-2.5 lg:py-3 2xl:py-3 rounded-lg" style={{ backgroundColor: '#f5edd3', color: '#593b2c' }}>
+                ⏳ Service launching soon! We're working hard to bring you the best money transfer experience.
+              </p>
+            </motion.div>
+
+            {/* Next Button - Disabled */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.7 }}
             >
               <Button
-                onClick={() => setCurrentStep(2)}
-                className="w-full text-white text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl 2xl:text-xl py-3 sm:py-4 md:py-4 lg:py-4.5 2xl:py-5 rounded-full font-bold transition-all duration-300 transform hover:-translate-y-1 uppercase tracking-wide flex items-center justify-center gap-2 h-12 sm:h-14 md:h-14 lg:h-15 2xl:h-16"
+                disabled
+                className="w-full text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl 2xl:text-xl py-3 sm:py-4 md:py-4 lg:py-4.5 2xl:py-5 rounded-full font-bold uppercase tracking-wide flex items-center justify-center gap-2 h-12 sm:h-14 md:h-14 lg:h-15 2xl:h-16 cursor-not-allowed opacity-50"
                 style={{
-                  backgroundColor: '#593b2c',
-                  boxShadow: '0 20px 25px -5px rgba(89, 59, 44, 0.5)'
+                  backgroundColor: '#9ca3af',
+                  color: '#ffffff',
+                  boxShadow: 'none'
                 }}
               >
                 Next
