@@ -115,7 +115,7 @@ export function SendCalculator() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="rounded-3xl p-6 max-w-md mx-auto lg:mx-0 w-full"
+        className="rounded-2xl sm:rounded-3xl p-5 sm:p-6 md:p-7 lg:p-8 xl:p-9 2xl:p-10 max-w-full sm:max-w-md md:max-w-lg lg:max-w-md xl:max-w-lg 2xl:max-w-xl mx-auto lg:mx-0 w-full"
         style={{
           backgroundColor: '#faf5e9',
           boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1)',
@@ -127,11 +127,11 @@ export function SendCalculator() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="mb-5"
+          className="mb-4 sm:mb-5 md:mb-6 lg:mb-7 2xl:mb-8"
         >
           <div>
-            <h3 className="text-xl font-bold" style={{ color: '#593b2c' }}>Send Money</h3>
-            <p className="text-xs font-medium" style={{ color: '#6b5d4f' }}>Fast, secure transfers</p>
+            <h3 className="text-lg sm:text-xl md:text-2xl lg:text-2xl xl:text-3xl 2xl:text-3xl font-bold" style={{ color: '#593b2c' }}>Send Money</h3>
+            <p className="text-xs sm:text-xs md:text-sm lg:text-sm xl:text-base 2xl:text-base font-medium" style={{ color: '#6b5d4f' }}>Fast, secure transfers</p>
           </div>
         </motion.div>
 
@@ -143,9 +143,9 @@ export function SendCalculator() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="mb-4"
+              className="mb-3 sm:mb-4 md:mb-5 lg:mb-5 2xl:mb-6"
             >
-              <Label className="block text-sm font-medium mb-2 tracking-wide" style={{ color: '#593b2c' }}>
+              <Label className="block text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base 2xl:text-base font-medium mb-1.5 sm:mb-2 md:mb-2 lg:mb-2.5 2xl:mb-3 tracking-wide" style={{ color: '#593b2c' }}>
                 Amount to send
               </Label>
               <div className="relative flex">
@@ -154,11 +154,11 @@ export function SendCalculator() {
                   value={sendAmount}
                   onChange={(e) => handleAmountChange(e.target.value)}
                   placeholder="0.00"
-                  className="flex-1 h-12 text-xl font-semibold bg-transparent border border-[#593b2c]/20 focus:border-[#593b2c]/40 focus:outline-none rounded-l-2xl border-r-0"
+                  className="flex-1 h-11 sm:h-12 md:h-13 lg:h-14 xl:h-15 2xl:h-16 text-lg sm:text-xl md:text-xl lg:text-xl xl:text-2xl 2xl:text-2xl font-semibold bg-transparent border border-[#593b2c]/20 focus:border-[#593b2c]/40 focus:outline-none rounded-l-xl sm:rounded-l-2xl border-r-0"
                   style={{ color: '#593b2c' }}
                 />
                 <Select value={selectedCurrency} onValueChange={handleCurrencyChange}>
-                  <SelectTrigger className="w-24 h-12 bg-transparent border border-[#593b2c]/20 focus:border-[#593b2c]/40 focus:outline-none rounded-r-2xl">
+                  <SelectTrigger className="w-20 sm:w-24 md:w-26 lg:w-28 xl:w-30 2xl:w-32 h-11 sm:h-12 md:h-13 lg:h-14 xl:h-15 2xl:h-16 text-sm sm:text-base md:text-base lg:text-base xl:text-lg 2xl:text-lg bg-transparent border border-[#593b2c]/20 focus:border-[#593b2c]/40 focus:outline-none rounded-r-xl sm:rounded-r-2xl">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -175,9 +175,9 @@ export function SendCalculator() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="mb-4"
+              className="mb-3 sm:mb-4 md:mb-5 lg:mb-5 2xl:mb-6"
             >
-              <Label className="block text-sm font-medium mb-2 tracking-wide" style={{ color: '#593b2c' }}>
+              <Label className="block text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base 2xl:text-base font-medium mb-1.5 sm:mb-2 md:mb-2 lg:mb-2.5 2xl:mb-3 tracking-wide" style={{ color: '#593b2c' }}>
                 They'll receive
               </Label>
               <div className="relative">
@@ -185,7 +185,7 @@ export function SendCalculator() {
                   type="text"
                   value={`${receiveAmount} SLL`}
                   readOnly
-                  className="w-full h-12 text-xl font-semibold cursor-default bg-transparent border border-[#593b2c]/20 rounded-2xl"
+                  className="w-full h-11 sm:h-12 md:h-13 lg:h-14 xl:h-15 2xl:h-16 text-lg sm:text-xl md:text-xl lg:text-xl xl:text-2xl 2xl:text-2xl font-semibold cursor-default bg-transparent border border-[#593b2c]/20 rounded-xl sm:rounded-2xl"
                   style={{ color: '#593b2c' }}
                 />
               </div>
@@ -196,9 +196,9 @@ export function SendCalculator() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.5 }}
-              className="mb-4"
+              className="mb-3 sm:mb-4 md:mb-5 lg:mb-5 2xl:mb-6"
             >
-              <Label className="block text-sm font-medium mb-2 tracking-wide" style={{ color: '#593b2c' }}>
+              <Label className="block text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base 2xl:text-base font-medium mb-1.5 sm:mb-2 md:mb-2 lg:mb-2.5 2xl:mb-3 tracking-wide" style={{ color: '#593b2c' }}>
                 Your WhatsApp number
               </Label>
               <div className="relative">
@@ -220,7 +220,7 @@ export function SendCalculator() {
                   } as React.CSSProperties}
                 />
               </div>
-              <p className="text-xs mt-2 font-medium px-3 py-2 rounded-full inline-block" style={{ backgroundColor: '#f5edd3', color: '#593b2c' }}>
+              <p className="text-xs sm:text-xs md:text-xs lg:text-sm xl:text-sm 2xl:text-sm mt-1.5 sm:mt-2 md:mt-2 lg:mt-2.5 2xl:mt-3 font-medium px-2.5 sm:px-3 md:px-3 lg:px-3.5 xl:px-4 2xl:px-4 py-1.5 sm:py-2 md:py-2 lg:py-2 2xl:py-2.5 rounded-full inline-block" style={{ backgroundColor: '#f5edd3', color: '#593b2c' }}>
                 💳 1% flat fee deducted from your card balance
               </p>
             </motion.div>
@@ -230,12 +230,12 @@ export function SendCalculator() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.65 }}
-              className="mb-4"
+              className="mb-3 sm:mb-4 md:mb-5 lg:mb-5 2xl:mb-6"
             >
-              <div className="flex justify-between text-sm text-gray-600">
+              <div className="flex justify-between text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base 2xl:text-base text-gray-600">
                 <span className="flex items-center gap-1">
-                  Exchange Rates 
-                  <span className="text-xs">ⓘ</span>
+                  Exchange Rates
+                  <span className="text-xs sm:text-xs md:text-xs lg:text-sm 2xl:text-sm">ⓘ</span>
                 </span>
                 <span>Fee = {calculateFee(sendAmount)} {selectedCurrency}</span>
               </div>
@@ -249,7 +249,7 @@ export function SendCalculator() {
             >
               <Button
                 onClick={() => setCurrentStep(2)}
-                className="w-full text-white text-lg py-4 rounded-full font-bold transition-all duration-300 transform hover:-translate-y-1 uppercase tracking-wide flex items-center justify-center gap-2 h-14"
+                className="w-full text-white text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl 2xl:text-xl py-3 sm:py-4 md:py-4 lg:py-4.5 2xl:py-5 rounded-full font-bold transition-all duration-300 transform hover:-translate-y-1 uppercase tracking-wide flex items-center justify-center gap-2 h-12 sm:h-14 md:h-14 lg:h-15 2xl:h-16"
                 style={{
                   backgroundColor: '#593b2c',
                   boxShadow: '0 20px 25px -5px rgba(89, 59, 44, 0.5)'
@@ -267,12 +267,12 @@ export function SendCalculator() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2 }}
-              className="mb-4"
+              className="mb-3 sm:mb-4 md:mb-5 lg:mb-5 2xl:mb-6"
             >
               <Button
                 onClick={() => setCurrentStep(1)}
                 variant="outline"
-                className="text-sm rounded-full"
+                className="text-xs sm:text-sm md:text-sm lg:text-base 2xl:text-base rounded-full h-9 sm:h-10 md:h-11 lg:h-12 2xl:h-12"
                 style={{ color: '#593b2c', borderColor: '#593b2c' }}
               >
                 ← Back
@@ -284,25 +284,25 @@ export function SendCalculator() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.3 }}
-              className="mb-6"
+              className="mb-4 sm:mb-6 md:mb-6 lg:mb-7 2xl:mb-8"
             >
-              <h4 className="text-lg font-bold mb-4" style={{ color: '#593b2c' }}>Transaction Summary</h4>
-              <div className="space-y-3">
+              <h4 className="text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl 2xl:text-2xl font-bold mb-3 sm:mb-4 md:mb-5 lg:mb-5 2xl:mb-6" style={{ color: '#593b2c' }}>Transaction Summary</h4>
+              <div className="space-y-2 sm:space-y-3 md:space-y-3 lg:space-y-3 2xl:space-y-4">
                 <div className="flex justify-between">
-                  <span className="text-sm" style={{ color: '#6b5d4f' }}>Send amount:</span>
-                  <span className="font-semibold" style={{ color: '#593b2c' }}>{sendAmount} {selectedCurrency}</span>
+                  <span className="text-xs sm:text-sm md:text-sm lg:text-base 2xl:text-base" style={{ color: '#6b5d4f' }}>Send amount:</span>
+                  <span className="font-semibold text-sm sm:text-base md:text-base lg:text-lg 2xl:text-lg" style={{ color: '#593b2c' }}>{sendAmount} {selectedCurrency}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm" style={{ color: '#6b5d4f' }}>They receive:</span>
-                  <span className="font-semibold" style={{ color: '#593b2c' }}>{receiveAmount} SLL</span>
+                  <span className="text-xs sm:text-sm md:text-sm lg:text-base 2xl:text-base" style={{ color: '#6b5d4f' }}>They receive:</span>
+                  <span className="font-semibold text-sm sm:text-base md:text-base lg:text-lg 2xl:text-lg" style={{ color: '#593b2c' }}>{receiveAmount} SLL</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm" style={{ color: '#6b5d4f' }}>WhatsApp:</span>
-                  <span className="font-semibold" style={{ color: '#593b2c' }}>{whatsappNumber || 'Not provided'}</span>
+                  <span className="text-xs sm:text-sm md:text-sm lg:text-base 2xl:text-base" style={{ color: '#6b5d4f' }}>WhatsApp:</span>
+                  <span className="font-semibold text-sm sm:text-base md:text-base lg:text-lg 2xl:text-lg" style={{ color: '#593b2c' }}>{whatsappNumber || 'Not provided'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-sm" style={{ color: '#6b5d4f' }}>Fee:</span>
-                  <span className="font-semibold" style={{ color: '#593b2c' }}>{calculateFee(sendAmount)} {selectedCurrency}</span>
+                  <span className="text-xs sm:text-sm md:text-sm lg:text-base 2xl:text-base" style={{ color: '#6b5d4f' }}>Fee:</span>
+                  <span className="font-semibold text-sm sm:text-base md:text-base lg:text-lg 2xl:text-lg" style={{ color: '#593b2c' }}>{calculateFee(sendAmount)} {selectedCurrency}</span>
                 </div>
               </div>
             </motion.div>
@@ -312,13 +312,13 @@ export function SendCalculator() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.4 }}
-              className="mb-6"
+              className="mb-4 sm:mb-6 md:mb-6 lg:mb-7 2xl:mb-8"
             >
-              <Label className="block text-sm font-medium mb-2 tracking-wide" style={{ color: '#593b2c' }}>
+              <Label className="block text-xs sm:text-sm md:text-sm lg:text-sm xl:text-base 2xl:text-base font-medium mb-1.5 sm:mb-2 md:mb-2 lg:mb-2.5 2xl:mb-3 tracking-wide" style={{ color: '#593b2c' }}>
                 Payment Method
               </Label>
               <Select value={paymentMethod} onValueChange={(value: 'card' | 'crypto') => setPaymentMethod(value)}>
-                <SelectTrigger className="w-full h-12 bg-transparent border border-[#593b2c]/20 focus:border-[#593b2c]/40 focus:outline-none rounded-2xl">
+                <SelectTrigger className="w-full h-11 sm:h-12 md:h-13 lg:h-14 xl:h-15 2xl:h-16 text-sm sm:text-base md:text-base lg:text-base xl:text-lg 2xl:text-lg bg-transparent border border-[#593b2c]/20 focus:border-[#593b2c]/40 focus:outline-none rounded-xl sm:rounded-2xl">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-[#faf5e9] border border-[#593b2c]/20">
@@ -336,13 +336,13 @@ export function SendCalculator() {
             >
               <Button
                 onClick={handleWhatsAppSend}
-                className="w-full text-white text-lg py-4 rounded-full font-bold transition-all duration-300 transform hover:-translate-y-1 uppercase tracking-wide flex items-center justify-center gap-2 h-14"
+                className="w-full text-white text-base sm:text-lg md:text-lg lg:text-lg xl:text-xl 2xl:text-xl py-3 sm:py-4 md:py-4 lg:py-4.5 2xl:py-5 rounded-full font-bold transition-all duration-300 transform hover:-translate-y-1 uppercase tracking-wide flex items-center justify-center gap-2 h-12 sm:h-14 md:h-14 lg:h-15 2xl:h-16"
                 style={{
                   backgroundColor: '#593b2c',
                   boxShadow: '0 20px 25px -5px rgba(89, 59, 44, 0.5)'
                 }}
               >
-                <MessageCircle size={20} />
+                <MessageCircle size={18} className="sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-5 lg:h-5 2xl:w-6 2xl:h-6" />
                 Send Money
               </Button>
             </motion.div>
