@@ -78,7 +78,7 @@ export function Header() {
                 size="sm"
                 className="rounded-full font-semibold"
                 style={{
-                  backgroundColor: '#cbc591',
+                  backgroundColor: '#faf5e9',
                   color: '#593b2c',
                   border: 'none'
                 }}
@@ -132,7 +132,7 @@ export function Header() {
                     size="sm"
                     className="w-full rounded-full font-semibold"
                     style={{
-                      backgroundColor: '#cbc591',
+                      backgroundColor: '#faf5e9',
                       color: '#593b2c',
                       border: 'none'
                     }}
