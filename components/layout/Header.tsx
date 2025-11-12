@@ -63,7 +63,8 @@ export function Header() {
                 key={item.name}
                 href={item.href}
                 whileHover={{ y: -2 }}
-                className="text-sm font-medium text-foreground hover:text-primary transition-colors duration-200"
+                className="text-sm font-medium transition-colors duration-200"
+                style={{ color: '#faf5e9' }}
               >
                 {item.name}
               </motion.a>
@@ -107,13 +108,14 @@ export function Header() {
             exit={{ opacity: 0, height: 0 }}
             className="md:hidden"
           >
-            <div className="px-2 pt-2 pb-3 space-y-1 bg-background border-t">
+            <div className="px-2 pt-2 pb-3 space-y-1 border-t" style={{ backgroundColor: '#593b2c', borderColor: 'rgba(250, 245, 233, 0.2)' }}>
               {navigation.map((item) => (
                 <motion.a
                   key={item.name}
                   href={item.href}
                   whileHover={{ x: 5 }}
-                  className="block px-3 py-2 text-base font-medium text-foreground hover:text-primary transition-colors duration-200"
+                  className="block px-3 py-2 text-base font-medium transition-colors duration-200"
+                  style={{ color: '#faf5e9' }}
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
