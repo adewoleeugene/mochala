@@ -75,8 +75,13 @@ export function Header() {
           <div className="hidden md:flex md:items-center md:space-x-4">
             <a href={whatsappLink} target="_blank" rel="noopener noreferrer">
               <Button
-                variant="outline"
                 size="sm"
+                className="rounded-full font-semibold"
+                style={{
+                  backgroundColor: '#faf5e9',
+                  color: '#593b2c',
+                  border: 'none'
+                }}
               >
                 <ChatCircle size={16} weight="fill" className="mr-2" />
                 Try on WhatsApp
@@ -124,9 +129,13 @@ export function Header() {
               <div className="pt-4">
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="block">
                   <Button
-                    variant="outline"
                     size="sm"
-                    className="w-full"
+                    className="w-full rounded-full font-semibold"
+                    style={{
+                      backgroundColor: '#faf5e9',
+                      color: '#593b2c',
+                      border: 'none'
+                    }}
                   >
                     <ChatCircle size={16} weight="fill" className="mr-2" />
                     Try on WhatsApp
