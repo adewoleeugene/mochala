@@ -81,11 +81,6 @@ export function Header() {
                 Try on WhatsApp
               </Button>
             </a>
-            <a href="#contact">
-              <Button size="sm">
-                Join Waitlist
-              </Button>
-            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -124,7 +119,7 @@ export function Header() {
                   {item.name}
                 </motion.a>
               ))}
-              <div className="pt-4 space-y-2">
+              <div className="pt-4">
                 <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="block">
                   <Button
                     variant="outline"
@@ -133,11 +128,6 @@ export function Header() {
                   >
                     <ChatCircle size={16} weight="fill" className="mr-2" />
                     Try on WhatsApp
-                  </Button>
-                </a>
-                <a href="#contact" className="block">
-                  <Button size="sm" className="w-full">
-                    Join Waitlist
                   </Button>
                 </a>
               </div>
