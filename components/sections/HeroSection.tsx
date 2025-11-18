@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { SendCalculator } from '@/components/ui/SendCalculator'
 import dynamic from 'next/dynamic'
 
 // Dynamically import Silk with fallback
@@ -70,14 +69,33 @@ export function HeroSection() {
             </motion.div>
           </motion.div>
 
-          {/* Right Column - Send Calculator */}
+          {/* Right Column - Demo Video */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="relative lg:scale-100 xl:scale-105 2xl:scale-125"
+            className="relative w-full max-w-full sm:max-w-md md:max-w-lg lg:max-w-md xl:max-w-lg 2xl:max-w-xl mx-auto lg:mx-0"
           >
-            <SendCalculator />
+            <div
+              className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden"
+              style={{
+                paddingBottom: '125%', // 4:5 aspect ratio for shorter video
+                boxShadow: '0 20px 60px -15px rgba(0, 0, 0, 0.25), 0 10px 30px -10px rgba(0, 0, 0, 0.1)',
+                border: '1.5px solid rgba(250, 245, 233, 0.15)'
+              }}
+            >
+              <iframe
+                className="absolute top-0 left-0 w-full h-full"
+                src="https://www.youtube.com/embed/Dltf1vfGOjQ?autoplay=1&mute=1&loop=1&playlist=Dltf1vfGOjQ&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1"
+                title="Mocha Demo"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                style={{
+                  borderRadius: 'inherit'
+                }}
+              />
+            </div>
           </motion.div>
         </div>
       </div>

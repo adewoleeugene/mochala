@@ -173,11 +173,11 @@ export function SendCalculator() {
                   value={sendAmount}
                   onChange={(e) => handleAmountChange(e.target.value)}
                   placeholder="0.00"
-                  className="flex-1 h-12 sm:h-13 md:h-14 lg:h-14 xl:h-15 2xl:h-16 text-lg sm:text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl font-semibold bg-transparent border-[1.5px] border-[#593b2c]/20 focus:border-[#593b2c]/50 focus:ring-2 focus:ring-[#593b2c]/10 transition-all duration-200 rounded-l-xl sm:rounded-l-2xl border-r-0"
+                  className="flex-1 h-12 sm:h-[3.25rem] md:h-14 lg:h-14 xl:h-[3.75rem] 2xl:h-16 text-lg sm:text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl font-semibold bg-transparent border-[1.5px] border-[#593b2c]/20 focus:border-[#593b2c]/50 focus:ring-2 focus:ring-[#593b2c]/10 transition-all duration-200 rounded-l-xl sm:rounded-l-2xl border-r-0"
                   style={{ color: '#593b2c' }}
                 />
                 <Select value={selectedCurrency} onValueChange={handleCurrencyChange}>
-                  <SelectTrigger className="w-20 sm:w-24 md:w-26 lg:w-28 xl:w-30 2xl:w-32 h-12 sm:h-13 md:h-14 lg:h-14 xl:h-15 2xl:h-16 text-sm sm:text-base md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-semibold bg-transparent border-[1.5px] border-[#593b2c]/20 focus:border-[#593b2c]/50 focus:ring-2 focus:ring-[#593b2c]/10 transition-all duration-200 rounded-r-xl sm:rounded-r-2xl">
+                  <SelectTrigger className="w-20 sm:w-24 md:w-[6.5rem] lg:w-28 xl:w-[7.5rem] 2xl:w-32 h-12 sm:h-[3.25rem] md:h-14 lg:h-14 xl:h-[3.75rem] 2xl:h-16 text-sm sm:text-base md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-semibold bg-transparent border-[1.5px] border-[#593b2c]/20 focus:border-[#593b2c]/50 focus:ring-2 focus:ring-[#593b2c]/10 transition-all duration-200 rounded-r-xl sm:rounded-r-2xl">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -205,7 +205,7 @@ export function SendCalculator() {
                   value={receiveAmount ? `${receiveAmount} SLL` : ''}
                   placeholder="0.00 SLL"
                   readOnly
-                  className="w-full h-12 sm:h-13 md:h-14 lg:h-14 xl:h-15 2xl:h-16 text-lg sm:text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl font-semibold cursor-default bg-[#593b2c]/5 border-[1.5px] border-[#593b2c]/20 rounded-xl sm:rounded-2xl transition-all duration-200"
+                  className="w-full h-12 sm:h-[3.25rem] md:h-14 lg:h-14 xl:h-[3.75rem] 2xl:h-16 text-lg sm:text-xl md:text-xl lg:text-2xl xl:text-2xl 2xl:text-3xl font-semibold cursor-default bg-[#593b2c]/5 border-[1.5px] border-[#593b2c]/20 rounded-xl sm:rounded-2xl transition-all duration-200"
                   style={{ color: '#593b2c' }}
                 />
               </div>
@@ -305,7 +305,7 @@ export function SendCalculator() {
                 >
                   <Button
                     disabled
-                    className="w-full text-base sm:text-lg md:text-lg lg:text-xl xl:text-xl 2xl:text-2xl py-3.5 sm:py-4 md:py-4.5 lg:py-5 2xl:py-5.5 rounded-full font-bold uppercase tracking-wide flex items-center justify-center gap-2 h-13 sm:h-14 md:h-15 lg:h-16 2xl:h-17 cursor-not-allowed opacity-50 transition-all duration-200"
+                    className="w-full text-base sm:text-lg md:text-lg lg:text-xl xl:text-xl 2xl:text-2xl py-3.5 sm:py-4 md:py-4.5 lg:py-5 2xl:py-5.5 rounded-full font-bold uppercase tracking-wide flex items-center justify-center gap-2 h-[3.25rem] sm:h-14 md:h-[3.75rem] lg:h-16 2xl:h-[4.25rem] cursor-not-allowed opacity-50 transition-all duration-200"
                     style={{
                       backgroundColor: '#9ca3af',
                       color: '#ffffff',
@@ -331,7 +331,7 @@ export function SendCalculator() {
               <Button
                 onClick={() => setCurrentStep(1)}
                 variant="outline"
-                className="text-xs sm:text-sm md:text-sm lg:text-base 2xl:text-base rounded-full h-10 sm:h-11 md:h-12 lg:h-12 2xl:h-13 font-medium transition-all duration-200"
+                className="text-xs sm:text-sm md:text-sm lg:text-base 2xl:text-base rounded-full h-10 sm:h-11 md:h-12 lg:h-12 2xl:h-[3.25rem] font-medium transition-all duration-200"
                 style={{ color: '#593b2c', borderColor: '#593b2c' }}
               >
                 ← Back
@@ -377,7 +377,7 @@ export function SendCalculator() {
                 Payment Method
               </Label>
               <Select value={paymentMethod} onValueChange={(value: 'card' | 'crypto') => setPaymentMethod(value)}>
-                <SelectTrigger className="w-full h-12 sm:h-13 md:h-14 lg:h-14 xl:h-15 2xl:h-16 text-sm sm:text-base md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-semibold bg-transparent border-[1.5px] border-[#593b2c]/20 focus:border-[#593b2c]/50 focus:ring-2 focus:ring-[#593b2c]/10 transition-all duration-200 rounded-xl sm:rounded-2xl">
+                <SelectTrigger className="w-full h-12 sm:h-[3.25rem] md:h-14 lg:h-14 xl:h-[3.75rem] 2xl:h-16 text-sm sm:text-base md:text-base lg:text-lg xl:text-lg 2xl:text-xl font-semibold bg-transparent border-[1.5px] border-[#593b2c]/20 focus:border-[#593b2c]/50 focus:ring-2 focus:ring-[#593b2c]/10 transition-all duration-200 rounded-xl sm:rounded-2xl">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-[#faf5e9] border border-[#593b2c]/20">
@@ -400,7 +400,7 @@ export function SendCalculator() {
               >
                 <Button
                   onClick={handleWhatsAppSend}
-                  className="w-full text-white text-base sm:text-lg md:text-lg lg:text-xl xl:text-xl 2xl:text-2xl py-3.5 sm:py-4 md:py-4.5 lg:py-5 2xl:py-5.5 rounded-full font-bold transition-all duration-300 uppercase tracking-wide flex items-center justify-center gap-2.5 h-13 sm:h-14 md:h-15 lg:h-16 2xl:h-17"
+                  className="w-full text-white text-base sm:text-lg md:text-lg lg:text-xl xl:text-xl 2xl:text-2xl py-3.5 sm:py-4 md:py-4.5 lg:py-5 2xl:py-5.5 rounded-full font-bold transition-all duration-300 uppercase tracking-wide flex items-center justify-center gap-2.5 h-[3.25rem] sm:h-14 md:h-[3.75rem] lg:h-16 2xl:h-[4.25rem]"
                   style={{
                     backgroundColor: '#593b2c',
                     boxShadow: '0 20px 40px -10px rgba(89, 59, 44, 0.5)'
