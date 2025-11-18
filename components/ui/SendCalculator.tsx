@@ -110,7 +110,7 @@ export function SendCalculator() {
     setReceiveAmount(calculated)
   }
 
-  const handlePhoneNumberChange = (value: string) => {
+  const handlePhoneNumberChange = (value: string | undefined) => {
     setWhatsappNumber(value || '')
 
     // Show fees after phone number is entered
