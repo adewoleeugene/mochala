@@ -7,12 +7,6 @@ import { Button } from '@/components/ui/button'
 import { generateWhatsAppLink } from '@/lib/utils'
 import Image from 'next/image'
 
-const navigation = [
-  { name: 'How it Works', href: '#how-it-works' },
-  { name: 'Features', href: '#features' },
-  { name: 'Contact', href: '#contact' },
-]
-
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -29,6 +23,12 @@ export function Header() {
     '2327898232', // Replace with actual WhatsApp number
     'Hi, I want to learn more about Mocha'
   )
+
+  const navigation = [
+    { name: 'How it Works', href: '#how-it-works' },
+    { name: 'Features', href: '#features' },
+    { name: 'Contact', href: whatsappLink, target: '_blank', rel: 'noopener noreferrer' },
+  ]
 
   return (
     <motion.header
@@ -71,18 +71,20 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-8">
-            {navigation.map((item) => (
-              <motion.a
-                key={item.name}
-                href={item.href}
-                whileHover={{ y: -2 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 17 }}
-                className="text-sm font-medium transition-all duration-200 hover:opacity-80"
-                style={{ color: '#faf5e9' }}
-              >
-                {item.name}
-              </motion.a>
-            ))}
+             {navigation.map((item) => (
+               <motion.a
+                 key={item.name}
+                 href={item.href}
+                 target={item.target}
+                 rel={item.rel}
+                 whileHover={{ y: -2 }}
+                 transition={{ type: 'spring', stiffness: 400, damping: 17 }}
+                 className="text-sm font-medium transition-all duration-200 hover:opacity-80"
+                 style={{ color: '#faf5e9' }}
+               >
+                 {item.name}
+               </motion.a>
+             ))}
           </div>
 
           {/* Desktop CTA */}
@@ -144,21 +146,23 @@ export function Header() {
                   borderColor: 'rgba(250, 245, 233, 0.2)'
                 }}
               >
-                {navigation.map((item, index) => (
-                  <motion.a
-                    key={item.name}
-                    href={item.href}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1, duration: 0.3 }}
-                    whileHover={{ x: 4 }}
-                    className="block px-3 py-2.5 text-base font-medium transition-all duration-200 rounded-lg hover:bg-white/5"
-                    style={{ color: '#faf5e9' }}
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    {item.name}
-                  </motion.a>
-                ))}
+                 {navigation.map((item, index) => (
+                   <motion.a
+                     key={item.name}
+                     href={item.href}
+                     target={item.target}
+                     rel={item.rel}
+                     initial={{ opacity: 0, x: -20 }}
+                     animate={{ opacity: 1, x: 0 }}
+                     transition={{ delay: index * 0.1, duration: 0.3 }}
+                     whileHover={{ x: 4 }}
+                     className="block px-3 py-2.5 text-base font-medium transition-all duration-200 rounded-lg hover:bg-white/5"
+                     style={{ color: '#faf5e9' }}
+                     onClick={() => setMobileMenuOpen(false)}
+                   >
+                     {item.name}
+                   </motion.a>
+                 ))}
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
