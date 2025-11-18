@@ -125,9 +125,9 @@ export function Footer() {
               >
                 ❤️
               </motion.span>
-              <span className="text-sm sm:text-base" style={{ color: 'rgba(250, 245, 233, 0.8)' }}>
-                for Sierra Leone
-              </span>
+               <span className="text-sm sm:text-base" style={{ color: 'rgba(250, 245, 233, 0.8)' }}>
+                 from Sierra Leone
+               </span>
             </motion.div>
           </div>
         </motion.div>
