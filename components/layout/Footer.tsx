@@ -1,153 +1,86 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { MessageCircle, Mail, Twitter, Instagram, Facebook } from 'lucide-react'
-import { generateWhatsAppLink } from '@/lib/utils'
+import { MessageCircle, Mail, Twitter, Instagram } from 'lucide-react'
 
 const socialLinks = [
-  { name: 'WhatsApp', icon: MessageCircle, href: '#', color: 'text-green-500' },
-  { name: 'Email', icon: Mail, href: 'mailto:hello@mocha.sl', color: 'text-blue-500' },
-  { name: 'Twitter', icon: Twitter, href: '#', color: 'text-blue-400' },
-  { name: 'Instagram', icon: Instagram, href: '#', color: 'text-pink-500' },
-  { name: 'Facebook', icon: Facebook, href: '#', color: 'text-blue-600' },
+  { name: 'WhatsApp', icon: MessageCircle, href: 'https://wa.me/23273938372', color: '#25D366' },
+  { name: 'Email', icon: Mail, href: 'mailto:mocha@christex.foundation', color: '#EA4335' },
+  { name: 'Twitter', icon: Twitter, href: 'https://x.com/getmochala', color: '#1DA1F2' },
+  { name: 'Instagram', icon: Instagram, href: 'https://www.instagram.com/getmochala?igsh=MWtibnhxa256bW92cg%3D%3D&utm_source=qr', color: '#E4405F' },
 ]
 
-const footerLinks = {
-  company: [
-    { name: 'About Us', href: '#' },
-    { name: 'How it Works', href: '#how-it-works' },
-    { name: 'Features', href: '#features' },
-    { name: 'Contact', href: '#contact' },
-  ],
-  legal: [
-    { name: 'Terms of Service', href: '#' },
-    { name: 'Privacy Policy', href: '#' },
-    { name: 'Cookie Policy', href: '#' },
-  ],
-  support: [
-    { name: 'Help Center', href: '#' },
-    { name: 'FAQ', href: '#faq' },
-    { name: 'Support', href: '#' },
-  ],
-}
-
 export function Footer() {
-  const whatsappLink = generateWhatsAppLink(
-    '2327898232', // Replace with actual WhatsApp number
-    'Hi, I want to learn more about Mocha'
-  )
-
   return (
     <footer style={{ backgroundColor: '#593b2c', color: '#faf5e9' }}>
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Brand Section */}
-          <div className="col-span-1 md:col-span-1">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-              className="space-y-4"
-            >
-              <div className="text-2xl font-bold" style={{ color: '#faf5e9' }}>Mocha</div>
-              <p className="text-sm" style={{ color: '#faf5e9', opacity: 0.8 }}>
-                Send, spend, and earn with stablecoins — right on WhatsApp.
-              </p>
-              <div className="flex space-x-4">
-                {socialLinks.map((social) => (
-                  <motion.a
-                    key={social.name}
-                    href={social.name === 'WhatsApp' ? whatsappLink : social.href}
-                    target={social.name === 'WhatsApp' ? '_blank' : '_self'}
-                    rel={social.name === 'WhatsApp' ? 'noopener noreferrer' : undefined}
-                    whileHover={{ scale: 1.1, y: -2 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="p-2 rounded-full transition-colors duration-200"
-                    style={{ backgroundColor: 'rgba(250, 245, 233, 0.1)' }}
-                  >
-                    <social.icon className="w-5 h-5" style={{ color: '#faf5e9' }} />
-                  </motion.a>
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Company Links */}
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 sm:py-14 md:py-16">
+        {/* Brand Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-col items-center text-center space-y-5 sm:space-y-6"
+        >
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ scale: 0.9 }}
+            whileInView={{ scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="text-3xl sm:text-4xl font-bold tracking-tight"
+            style={{ color: '#faf5e9' }}
+          >
+            Mocha
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="space-y-4"
+            className="text-sm sm:text-base md:text-lg max-w-md leading-relaxed"
+            style={{ color: '#faf5e9', opacity: 0.9 }}
           >
-            <h3 className="text-lg font-semibold" style={{ color: '#faf5e9' }}>Company</h3>
-            <ul className="space-y-2">
-              {footerLinks.company.map((link) => (
-                <li key={link.name}>
-                  <motion.a
-                    href={link.href}
-                    whileHover={{ x: 5 }}
-                    className="text-sm transition-colors duration-200"
-                    style={{ color: 'rgba(250, 245, 233, 0.8)' }}
-                  >
-                    {link.name}
-                  </motion.a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+            Send, spend, and earn with stablecoins — right on WhatsApp.
+          </motion.p>
 
-          {/* Legal Links */}
+          {/* Social Links */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="space-y-4"
+            className="flex flex-wrap justify-center gap-3 sm:gap-4"
           >
-            <h3 className="text-lg font-semibold" style={{ color: '#faf5e9' }}>Legal</h3>
-            <ul className="space-y-2">
-              {footerLinks.legal.map((link) => (
-                <li key={link.name}>
-                  <motion.a
-                    href={link.href}
-                    whileHover={{ x: 5 }}
-                    className="text-sm transition-colors duration-200"
-                    style={{ color: 'rgba(250, 245, 233, 0.8)' }}
-                  >
-                    {link.name}
-                  </motion.a>
-                </li>
-              ))}
-            </ul>
+            {socialLinks.map((social, index) => (
+              <motion.a
+                key={social.name}
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ scale: 0, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.4,
+                  delay: 0.3 + index * 0.1,
+                  type: 'spring',
+                  stiffness: 200
+                }}
+                whileHover={{ scale: 1.15, y: -3 }}
+                whileTap={{ scale: 0.95 }}
+                className="group p-3 sm:p-3.5 rounded-full transition-all duration-300"
+                style={{
+                  backgroundColor: 'rgba(250, 245, 233, 0.1)',
+                }}
+              >
+                <social.icon
+                  className="w-5 h-5 sm:w-6 sm:h-6 transition-colors duration-300"
+                  style={{ color: '#faf5e9' }}
+                />
+              </motion.a>
+            ))}
           </motion.div>
-
-          {/* Support Links */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="space-y-4"
-          >
-            <h3 className="text-lg font-semibold" style={{ color: '#faf5e9' }}>Support</h3>
-            <ul className="space-y-2">
-              {footerLinks.support.map((link) => (
-                <li key={link.name}>
-                  <motion.a
-                    href={link.href}
-                    whileHover={{ x: 5 }}
-                    className="text-sm transition-colors duration-200"
-                    style={{ color: 'rgba(250, 245, 233, 0.8)' }}
-                  >
-                    {link.name}
-                  </motion.a>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
-        </div>
+        </motion.div>
 
         {/* Bottom Section */}
         <motion.div
@@ -155,18 +88,47 @@ export function Footer() {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="mt-8 pt-8"
+          className="mt-10 sm:mt-12 pt-8 sm:pt-10"
           style={{ borderTop: '1px solid rgba(250, 245, 233, 0.2)' }}
         >
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm" style={{ color: 'rgba(250, 245, 233, 0.8)' }}>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 sm:gap-5">
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="text-sm sm:text-base"
+              style={{ color: 'rgba(250, 245, 233, 0.8)' }}
+            >
               © 2025 Mocha. All rights reserved.
-            </p>
-            <div className="flex space-x-6">
-              <span className="text-sm" style={{ color: 'rgba(250, 245, 233, 0.8)' }}>
-                Made with ❤️ for Sierra Leone
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.5 }}
+              className="flex items-center gap-2"
+            >
+              <span className="text-sm sm:text-base" style={{ color: 'rgba(250, 245, 233, 0.8)' }}>
+                Made with
               </span>
-            </div>
+              <motion.span
+                animate={{
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: 'easeInOut'
+                }}
+                className="text-lg"
+              >
+                ❤️
+              </motion.span>
+              <span className="text-sm sm:text-base" style={{ color: 'rgba(250, 245, 233, 0.8)' }}>
+                for Sierra Leone
+              </span>
+            </motion.div>
           </div>
         </motion.div>
       </div>

@@ -39,20 +39,32 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="space-y-6 sm:space-y-8 md:space-y-10 lg:space-y-12 2xl:space-y-16"
           >
             {/* Main Headline */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
               className="space-y-4 sm:space-y-6 md:space-y-8 lg:space-y-10 2xl:space-y-12"
             >
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-[7rem] font-black leading-[1.1] lg:leading-[1.1] 2xl:leading-[1.05] tracking-tight" style={{ color: '#faf5e9' }}>
+              <h1
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-[7rem] font-black leading-[1.1] lg:leading-[1.1] 2xl:leading-[1.05] tracking-tight"
+                style={{
+                  color: '#faf5e9',
+                  textShadow: '0 2px 20px rgba(0, 0, 0, 0.2)'
+                }}
+              >
                 BANKING THAT LIVES IN YOUR WHATSAPP
               </h1>
-              <p className="text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl leading-relaxed font-regular" style={{ color: '#faf5e9' }}>
+              <p
+                className="text-base sm:text-lg md:text-xl lg:text-xl xl:text-2xl 2xl:text-3xl max-w-full sm:max-w-xl md:max-w-2xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl leading-relaxed font-normal"
+                style={{
+                  color: '#faf5e9',
+                  opacity: 0.95
+                }}
+              >
                 Bringing you a simple, instant, and efficient way to send and receive money through WhatsApp. No registration, no account needed: just choose a number and send!
               </p>
             </motion.div>
@@ -62,7 +74,7 @@ export function HeroSection() {
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
             className="relative lg:scale-100 xl:scale-105 2xl:scale-125"
           >
             <SendCalculator />
